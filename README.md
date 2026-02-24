@@ -1,1 +1,1 @@
-##This is for calculating SA score, using your own dataset
+This is for calculating SA score, using your own dataset
