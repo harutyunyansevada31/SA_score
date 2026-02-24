@@ -11,7 +11,7 @@ RDLogger.DisableLog('rdApp.*')
 limit = 1000000
 count = 0
 smiles_list = []
-with zipfile.ZipFile("/home/denovo/Downloads/pubchem_10m.txt.zip") as z: # You can change this to your 1 million SMILES data
+with zipfile.ZipFile("pubchem_10m.txt.zip") as z: # You can change this to your 1 million SMILES data
     inner = z.namelist()[0]
     with z.open(inner, "r") as f:
         for raw in f:
