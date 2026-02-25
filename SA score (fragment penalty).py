@@ -1,5 +1,5 @@
 from rdkit import Chem
-from rdkit.Chem import AllChem, DataStructs, rdMolDescriptors, Descriptors
+from rdkit.Chem import AllChem, Descriptors
 from collections import Counter
 import pandas as pd
 import zipfile
