@@ -54,8 +54,7 @@ The second script loads the `freq_data.csv` and calculates scores for a target d
 
 The SA Score is calculated as:
 
-
-$$SA\_Score = f(\text{fragment\_penalty} - \text{complexity\_penalty})$$
+SA\_Score = fragment\_penalty - complexity\_penalty
 
 | Component | Description |
 | --- | --- |
