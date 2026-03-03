@@ -65,15 +65,76 @@ SA\_Score = fragment\_penalty - complexity\_penalty
 
 ---
 
-## 💻 Usage
+To include a **"How to Use"** section in your README that explains the technical setup on a local computer, use the following format.
 
-1. **Generate Frequencies:**
-Place your raw SMILES zip file in the directory and run the first block of code to generate `freq_data.csv`.
-2. **Score Molecules:**
-Update the path to your CSV (e.g., `chembl_1000000_random.csv`) in `main()` and run:
+This guide assumes the user has a Python environment ready.
+
+---
+
+## 💻 Installation & Usage Guide
+
+Follow these steps to set up and run the Synthetic Accessibility (SA) Scorer on your local machine.
+
+### 1. Environment Setup
+
+First, ensure you have Python 3.8+ installed. It is recommended to use a virtual environment:
+
+```bash
+# Create and activate a virtual environment
+python -m venv sa_env
+source sa_env/bin/activate  # On Windows: sa_env\Scripts\activate
+
+# Install required dependencies
+pip install rdkit pandas numpy tqdm
+```
+
+### 2. Prepare the Reference Data (First Run Only)
+
+The scorer requires a fragment frequency library to determine what "rare" chemistry looks like.
+
+1. Download a large SMILES dataset (e.g., PubChem) and name it `pubchem_10m.txt.zip`.
+2. Run the **Fragment Counting** portion of the script.
+3. This will generate a file named `freq_data.csv`. **Do not delete this file**, as the scorer needs it for every calculation.
+
+### 3. Running the Scorer
+
+To score your own molecules, follow these steps:
+
+1. **Prepare your input:** Create a CSV file (e.g., `molecules_to_score.csv`) with a column named `smiles`.
+2. **Update Paths:** Open the script and update the file paths in the `main()` function:
+```python
+# Update these paths to match your computer's folders
+freq_data_path = 'C:/Users/Name/Downloads/freq_data.csv'
+input_smiles_path = 'C:/Users/Name/Downloads/molecules_to_score.csv'
+```
+
+
+3. **Execute:**
 ```bash
 python sa_scorer.py
+```
 
+
+
+### 4. How it Works (System Architecture)
+
+The script uses a multi-stage pipeline to ensure efficiency on your local hardware:
+
+1. **Data Loading:** Loads the `freq_data.csv` into memory as a lookup dictionary.
+2. **Parallelization:** The script detects your CPU core count (e.g., 8 or 16 cores) and splits your SMILES list into "chunks."
+3. **Processing:** Each core independently calculates the fragment and complexity penalties.
+4. **Aggregation:** Results are collected and displayed as an average score and total processing time.
+
+---
+
+### 📂 File Requirements
+
+* **`freq_data.csv`**: The "knowledge base" created from the reference set.
+* **`target_data.csv`**: Your molecules. Must contain a `smiles` column.
+
+---
+
+Would you like me to write a small **troubleshooting section** for common errors, such as RDKit "NoneType" errors when a SMILES string is invalid?
 ```
 
 
