@@ -14,4 +14,4 @@ To get this project running locally, follow these steps:
 
 1. **Clone the repo:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/SA_score_codes.git](https://github.com/YOUR_USERNAME/SA_score_codes.git)
+   git clone [https://github.com/harutyunyansevada31/SA_score.git](https://github.com/harutyunyansevada31/SA_score.git)
