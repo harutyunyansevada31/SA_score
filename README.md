@@ -15,18 +15,6 @@ This repository provides a high-performance Python tool for calculating the **Sy
 * **Normalization:** Outputs a score between **1 (Easy to synthesize)** and **10 (Very difficult)**.
 
 ---
-
-## 🛠 Prerequisites
-
-Ensure you have the following libraries installed:
-
-```bash
-pip install rdkit pandas numpy tqdm
-
-```
-
----
-
 ## 📂 Code Structure
 
 The implementation consists of two main workflows:
@@ -129,23 +117,6 @@ The script uses a multi-stage pipeline to ensure efficiency on your local hardwa
 
 ### 📂 File Requirements
 
+* **`pubchem_10m.txt.zip`**: Dataset for creating freq_data.csv, Just in case, [Here is the dataset I used](https://huggingface.co/datasets/sagawa/pubchem-10m-canonicalized?) 
 * **`freq_data.csv`**: The "knowledge base" created from the reference set.
 * **`target_data.csv`**: Your molecules. Must contain a `smiles` column.
-
----
-
-Would you like me to write a small **troubleshooting section** for common errors, such as RDKit "NoneType" errors when a SMILES string is invalid?
-```
-
-
-3. **View Results:**
-The script will output processing statistics, including total time, average score, and the number of valid molecules processed.
-
----
-
-## ⚠️ Notes
-
-* **Default Penalty:** Fragments not found in the reference training set are assigned a "Default Penalty" based on the rarest known fragment.
-* **Logging:** RDKit logs are disabled by default (`RDLogger.DisableLog`) to keep the terminal clean during large-scale processing.
-
-Would you like me to help you write a script to visualize the distribution of these scores using Matplotlib or Seaborn?
