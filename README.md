@@ -1,4 +1,18 @@
-2. Prepare Fragment DataThe scorer requires a reference file (freq_data.csv) generated from a large SMILES dataset to determine fragment rarity.Python# Run the training script to analyze your SMILES source (e.g., PubChem)
+# 🧪 Molecular Synthetic Accessibility (SA) Scorer
+
+A high-performance Python implementation for estimating the **Synthetic Accessibility (SA) Score** of molecules. This tool uses fragment frequency analysis from a 1-million-molecule training set and applies penalties for topological complexity (bridgeheads, spiro atoms, stereocenters, and macrocycles).
+
+---
+
+## 🚀 Quick Start
+
+### 1. Installation
+Ensure you have the required chemical informatics and data science libraries installed:
+
+```bash
+pip install pandas numpy tqdm rdkit
+
+### 2. Prepare Fragment DataThe scorer requires a reference file (freq_data.csv) generated from a large SMILES dataset to determine fragment rarity.Python# Run the training script to analyze your SMILES source (e.g., PubChem)
 # This creates the necessary fragment_penalty lookup table.
 python "SA score (main part).py"
 3. Usage ExampleYou can import the core function into your own virtual screening pipeline:Pythonfrom sa_score_main import compute_sa_score
