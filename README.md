@@ -92,8 +92,8 @@ To score your own molecules, follow these steps:
 2. **Update Paths:** Open the script and update the file paths in the `main()` function:
 ```python
 # Update these paths to match your computer's folders
-freq_data_path = 'C:/Users/Name/Downloads/freq_data.csv'
-input_smiles_path = 'C:/Users/Name/Downloads/molecules_to_score.csv'
+freq_data_path = 'C:/Users/Name/Downloads/freq_data.csv' or '/home/Name/Downloads/freq_data.csv'
+input_smiles_path = 'C:/Users/Name/Downloads/target_data.csv' or '/home/Name/Downloads/target_data.csv'
 ```
 
 
