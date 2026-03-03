@@ -1,9 +1,3 @@
-This is a robust implementation for calculating **Synthetic Accessibility (SA) Scores** using RDKit, patterned after the Ertl and Schuffenhauer method. Your code is split into two logical phases: generating a reference fragment library from a large dataset (like PubChem) and then applying those scores to a target dataset (like ChEMBL) using parallel processing.
-
-Below is a structured `README.md` for your project.
-
----
-
 # Molecular Synthetic Accessibility (SA) Scorer
 
 This repository provides a high-performance Python tool for calculating the **Synthetic Accessibility (SA) Score** of chemical compounds. The score estimates how difficult a molecule is to synthesize based on fragment frequency (from a 1-million molecule reference set) and structural complexity (rings, stereo centers, macrocycles, and bridged systems).
