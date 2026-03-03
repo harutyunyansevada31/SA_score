@@ -1,17 +1,19 @@
 # SA Score Calculator
-> A Python-based tool for calculating Synthetic Accessibility (SA) scores for chemical structures.
+> A Python tool to estimate the Synthetic Accessibility of molecular structures.
 
-## 📌 Overview
-This project provides a robust way to analyze molecular structures and determine how difficult they are to synthesize. It's designed for researchers and chemists working in drug discovery.
+## 🔬 Project Overview
+This repository contains a Python implementation for calculating **SA Scores**. The SA Score is used in cheminformatics to prioritize molecules that are easier to synthesize in a laboratory setting. 
 
-## 🚀 Key Features
-* **Fast Calculation:** Optimized for large datasets.
-* **Easy Integration:** Can be imported into existing RDKit workflows.
-* **Clean Data:** Automatically handles common SMILES formatting issues.
+Scores typically range from **1 (easy to synthesize)** to **10 (very difficult to synthesize)**.
 
-## 🛠️ Installation
-To get this project running locally, follow these steps:
+## 🛠️ Requirements
+This project requires Python 3.x and the following libraries:
+* **RDKit** (for molecular processing)
+* **Math** (standard library)
 
-1. **Clone the repo:**
+## 🚀 How to Run
+To calculate the score for a molecule, use the main script:
+
+1. **Clone the project:**
    ```bash
    git clone [https://github.com/harutyunyansevada31/SA_score.git](https://github.com/harutyunyansevada31/SA_score.git)
