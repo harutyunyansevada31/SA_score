@@ -117,6 +117,6 @@ The script uses a multi-stage pipeline to ensure efficiency on your local hardwa
 
 ### 📂 File Requirements
 
-* **`pubchem_10m.txt.zip`**: Dataset for creating freq_data.csv, Just in case, [Here is the dataset I used](https://huggingface.co/datasets/sagawa/pubchem-10m-canonicalized?) 
+* **`pubchem_10m.txt.zip`**: Dataset for creating freq_data.csv, Just in case, [Here is the dataset I used](https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/pubchem_10m.txt.zip) 
 * **`freq_data.csv`**: The "knowledge base" created from the reference set.
 * **`target_data.csv`**: Your molecules. Must contain a `smiles` column.
