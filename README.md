@@ -1,26 +1,97 @@
-# 🧪 Molecular Synthetic Accessibility (SA) Scorer
+This is a robust implementation for calculating **Synthetic Accessibility (SA) Scores** using RDKit, patterned after the Ertl and Schuffenhauer method. Your code is split into two logical phases: generating a reference fragment library from a large dataset (like PubChem) and then applying those scores to a target dataset (like ChEMBL) using parallel processing.
 
-A high-performance Python implementation for estimating the **Synthetic Accessibility (SA) Score** of molecules. This tool uses fragment frequency analysis from a 1-million-molecule training set and applies penalties for topological complexity (bridgeheads, spiro atoms, stereocenters, and macrocycles).
+Below is a structured `README.md` for your project.
 
 ---
 
-## 🚀 Quick Start
+# Molecular Synthetic Accessibility (SA) Scorer
 
-### 1. Installation
-Ensure you have the required chemical informatics and data science libraries installed:
+This repository provides a high-performance Python tool for calculating the **Synthetic Accessibility (SA) Score** of chemical compounds. The score estimates how difficult a molecule is to synthesize based on fragment frequency (from a 1-million molecule reference set) and structural complexity (rings, stereo centers, macrocycles, and bridged systems).
+
+## 🚀 Features
+
+* **Fragment-Based Analysis:** Uses Morgan Fingerprints (Radius 2) to build a fragment frequency dictionary.
+* **Structural Complexity Penalty:** Factors in:
+* **Spiro and Bridgehead atoms** (using custom ring-topology logic).
+* **Stereocenters** and **Macrocycles** (>8 atoms).
+* **Size Penalty** based on heavy atom count.
+
+
+* **Parallel Processing:** Optimized with `multiprocessing` to handle large datasets (e.g., 100k+ molecules) quickly.
+* **Normalization:** Outputs a score between **1 (Easy to synthesize)** and **10 (Very difficult)**.
+
+---
+
+## 🛠 Prerequisites
+
+Ensure you have the following libraries installed:
 
 ```bash
-pip install pandas numpy tqdm rdkit
+pip install rdkit pandas numpy tqdm
 
-### 2. Prepare Fragment DataThe scorer requires a reference file (freq_data.csv) generated from a large SMILES dataset to determine fragment rarity.Python# Run the training script to analyze your SMILES source (e.g., PubChem)
-# This creates the necessary fragment_penalty lookup table.
-python "SA score (main part).py"
-3. Usage ExampleYou can import the core function into your own virtual screening pipeline:Pythonfrom sa_score_main import compute_sa_score
+```
 
-# Example: Ibuprofen
-smiles = "CC(C)Cc1ccc(cc1)C(C)C(=O)O" 
-score = compute_sa_score(smiles)
+---
 
-print(f"The SA Score for Ibuprofen is: {score:.2f}")
-# Output: The SA Score for Ibuprofen is: 2.15
-🧠 MethodologyThe tool calculates a raw score by balancing Fragment Penalties against Complexity Penalties, then scales the result to a user-friendly 1–10 range.🧬 Structural Features Tracked:Spiro & Bridgehead Atoms: Detects non-planar, difficult-to-synthesize ring junctions using custom ring-walk logic.Macrocycle Penalty: Increases for rings with more than 8 atoms.Stereocenter Complexity: Penalties based on the count of chiral centers.Size Penalty: An exponential factor based on total atom count ($n^{1.005} - n$).📂 Project StructureFileDescriptionSA score (main part).pyPrimary engine with multiprocessing support and complexity logic.freq_data.csvPre-calculated fragment penalty lookup table..gitignoreExcludes environment folders and local raw datasets.README.mdDocumentation and usage guide.📊 PerformanceUsing Python's multiprocessing.Pool, this tool is optimized for speed:Parallel Processing: Utilizes cpu_count() - 1 to maximize throughput.Virtual Screening: Capable of processing 100,000 molecules in ~2 minutes.Progress Tracking: Integrated with tqdm for real-time monitoring.
+## 📂 Code Structure
+
+The implementation consists of two main workflows:
+
+### 1. Fragment Frequency Generation (`Pre-processing`)
+
+The first script processes a large `.zip` file (e.g., `pubchem_10m.txt.zip`) to:
+
+1. Filter molecules by Molecular Weight (100–700 Da).
+2. Deconstruct molecules into Morgan fragments.
+3. Calculate a **Fragment Penalty** based on the log-frequency of occurrence.
+4. Export the reference data to `freq_data.csv`.
+
+### 2. SA Score Calculation (`Main Pipeline`)
+
+The second script loads the `freq_data.csv` and calculates scores for a target dataset:
+
+* **`compute_sa_score(smiles)`**: The core function that aggregates fragment penalties and complexity penalties.
+* **`is_bridged(smiles)`**: A deep-dive topological function to identify complex ring systems.
+* **`process_molecules_in_parallel`**: Uses a pool of workers to maximize CPU utilization.
+
+---
+
+## 📈 Methodology
+
+The SA Score is calculated as:
+
+
+$$SA\_Score = f(\text{fragment\_penalty} - \text{complexity\_penalty})$$
+
+| Component | Description |
+| --- | --- |
+| **Fragment Score** | Based on the rarity of fragments in the PubChem/Reference set. Rare fragments increase the score. |
+| **Size Penalty** | $n^{1.005} - n$, where $n$ is the number of atoms. |
+| **Stereo Penalty** | $\log_{10}(\text{chiral centers} + 1)$. |
+| **Ring Penalty** | Specifically targets bridged, spiro, and macrocyclic systems. |
+
+---
+
+## 💻 Usage
+
+1. **Generate Frequencies:**
+Place your raw SMILES zip file in the directory and run the first block of code to generate `freq_data.csv`.
+2. **Score Molecules:**
+Update the path to your CSV (e.g., `chembl_1000000_random.csv`) in `main()` and run:
+```bash
+python sa_scorer.py
+
+```
+
+
+3. **View Results:**
+The script will output processing statistics, including total time, average score, and the number of valid molecules processed.
+
+---
+
+## ⚠️ Notes
+
+* **Default Penalty:** Fragments not found in the reference training set are assigned a "Default Penalty" based on the rarest known fragment.
+* **Logging:** RDKit logs are disabled by default (`RDLogger.DisableLog`) to keep the terminal clean during large-scale processing.
+
+Would you like me to help you write a script to visualize the distribution of these scores using Matplotlib or Seaborn?
