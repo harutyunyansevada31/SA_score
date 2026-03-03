@@ -237,7 +237,7 @@ def main():
     """Main execution function."""
     # Load SMILES data
     smiles_data = pd.read_csv('chembl_1000000_random.csv')
-    smiles_list = smiles_data['smiles'].tolist()[:100000]
+    smiles_list = smiles_data['smiles'].tolist()[:1000000]
 
     # Process molecules
     start_time = time.time()
