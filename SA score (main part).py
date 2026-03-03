@@ -24,7 +24,7 @@ def load_fragment_data(filepath: str) -> tuple:
 
 
 # Load fragment data
-freq_df, freq_dict, penalty_dict = load_fragment_data('/home/denovo/Downloads/freq_data.csv')
+freq_df, freq_dict, penalty_dict = load_fragment_data('freq_data.csv')
 DEFAULT_PENALTY = freq_df.iloc[-1, 2]
 
 
@@ -236,7 +236,7 @@ def process_molecules_in_parallel(smiles_list: list, num_workers: int = None) ->
 def main():
     """Main execution function."""
     # Load SMILES data
-    smiles_data = pd.read_csv('/home/denovo/Downloads/chembl_1000000_random.csv')
+    smiles_data = pd.read_csv('chembl_1000000_random.csv')
     smiles_list = smiles_data['smiles'].tolist()[:100000]
 
     # Process molecules
