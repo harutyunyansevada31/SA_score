@@ -121,5 +121,7 @@ The script uses a multi-stage pipeline to ensure efficiency on your local hardwa
 * **`freq_data.csv`**: The "knowledge base" created from the reference set.
 * **`target_data.csv`**: Your molecules. Must contain a `smiles` column.
 
+---
+
 ### ⚖️ License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/harutyunyansevada31/SA_score/blob/main/LICENSE) file for details.
