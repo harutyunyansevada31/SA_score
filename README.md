@@ -125,4 +125,4 @@ The script uses a multi-stage pipeline to ensure efficiency on your local hardwa
 
 ### 5. Licence
 
-MIT licence
+MIT Licence.
