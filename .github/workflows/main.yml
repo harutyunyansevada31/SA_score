@@ -14,21 +14,26 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Use Conda instead of standard Python setup
+    # Setting Python to 3.11 to support numpy 2.4+
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
-        python-version: "3.10"
+        python-version: "3.11"
         channels: conda-forge
         activate-environment: test-env
 
     - name: Install RDKit and dependencies
       shell: bash -l {0}
       run: |
-        conda install rdkit pytest flake8
-        # If you have other specific needs in requirements.txt:
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        conda install rdkit pytest flake8 numpy pandas -y
+        
+        if [ -f requirements.txt ]; then 
+          # This line removes the strict numpy version from requirements 
+          # so pip doesn't clash with the version conda just installed.
+          sed -i '/numpy/d' requirements.txt
+          pip install -r requirements.txt
+        fi
 
     - name: Lint with flake8
       shell: bash -l {0}
