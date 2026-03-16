@@ -25,13 +25,9 @@ jobs:
     - name: Install RDKit and dependencies
       shell: bash -l {0}
       run: |
-        # 1. Install core scientific packages via Conda
         conda install rdkit pytest flake8 numpy pandas -y
         
-        # 2. Install additional pip dependencies if they exist
         if [ -f requirements.txt ]; then 
-          # Remove numpy from requirements to prevent pip from 
-          # trying to overwrite the conda-installed version
           sed -i '/numpy/d' requirements.txt
           pip install -r requirements.txt
         fi
@@ -39,7 +35,6 @@ jobs:
     - name: Lint with flake8
       shell: bash -l {0}
       run: |
-        # Stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
     - name: Run tests with pytest
