@@ -63,8 +63,6 @@ class FragmentPenaltyFile:
         self.freq_df['cumsum'] = self.freq_df['count'].cumsum()
 
         threshold_idx = self.freq_df[self.freq_df['cumsum'] >= summ * 0.8].index[0]
-        # Note: 'mean' is calculated in original script but not used in the penalty formula
-        mean = self.freq_df.loc[threshold_idx, 'count']
 
         self.freq_df['fragment_penalty'] = np.log10(self.freq_df['count'] / threshold_idx)
         self.freq_df = self.freq_df.drop(columns=['cumsum'])
