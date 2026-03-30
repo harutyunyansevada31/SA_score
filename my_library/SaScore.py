@@ -8,8 +8,7 @@ warnings.filterwarnings('ignore')
 RDLogger.DisableLog('rdApp.*')
 
 class MoleculeProcessor:
-    def __init__(self, filepath='/home/denovo/Downloads/freq_data.csv'):
-        # --- HEAVY LOADING (Happens only ONCE) ---
+    def __init__(self, filepath):
         freq_df = pd.read_csv(filepath)
         self.freq_dict = dict(zip(freq_df['fragment'], freq_df['count']))
         self.penalty_dict = dict(zip(freq_df['fragment'], freq_df['fragment_penalty']))
@@ -172,7 +171,7 @@ class MoleculeProcessor:
         })
         return fragment_data['fragment_penalty'].mean()
 
-    def SaScore(self, smiles):
+    def SaScorer(self, smiles):
         if not self._prepare_mol(smiles):
             return None
         try:

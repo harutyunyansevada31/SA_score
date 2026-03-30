@@ -9,7 +9,7 @@ import numpy as np
 # Disabling RDKit logging
 RDLogger.DisableLog('rdApp.*')
 
-class FragmentPenaltyFile:
+class FragmentPenalty:
     def __init__(self, zip_path, limit=1000000):
         self.zip_path = zip_path
         self.limit = limit

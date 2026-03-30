@@ -1,127 +1,93 @@
-# Molecular Synthetic Accessibility (SA) Scorer
+# SA-Score: Synthetic Accessibility Scorer
 
-This repository provides a high-performance Python tool for calculating the **Synthetic Accessibility (SA) Score** of chemical compounds. The score estimates how difficult a molecule is to synthesize based on fragment frequency (from a 1-million molecule reference set) and structural complexity (rings, stereo centers, macrocycles, and bridged systems).
+**SA-Score** is a Python-based tool designed to estimate the synthetic accessibility of drug-like molecules. By combining fragment-based analysis with structural complexity penalties, it provides a heuristic score (typically between 1 and 10) to help prioritize molecules in virtual screening and generative design.
 
-## 🚀 Features
+## 🧪 Features
+* **Fragment-Based Scoring:** Analyzes the frequency of molecular fragments (based on Morgan fingerprints) to identify common vs. "rare" substructures.
+* **Complexity Penalties:** Accounts for structural features that complicate synthesis, including:
+    * Chiral centers
+    * Ring complexity (bridgeheads, spiro atoms, and macrocycles)
+    * Molecular size and symmetry
+* **RDKit Integration:** Seamlessly processes SMILES strings and RDKit molecule objects.
+* **Batch Processing:** Support for scoring large libraries of molecules efficiently.
 
-* **Fragment-Based Analysis:** Uses Morgan Fingerprints (Radius 2) to build a fragment frequency dictionary.
-* **Structural Complexity Penalty:** Factors in:
-* **Spiro and Bridgehead atoms** (using custom ring-topology logic).
-* **Stereocenters** and **Macrocycles** (>8 atoms).
-* **Size Penalty** based on heavy atom count.
+## 🚀 Getting Started
 
+### Prerequisites
+* **Python 3.8+**
+* **RDKit** (Core dependency for molecular manipulation)
 
-* **Parallel Processing:** Optimized with `multiprocessing` to handle large datasets (e.g., 100k+ molecules) quickly.
-* **Normalization:** Outputs a score between **1 (Easy to synthesize)** and **10 (Very difficult)**.
-
----
-## 📂 Code Structure
-
-The implementation consists of two main workflows:
-
-### 1. Fragment Frequency Generation (`Pre-processing`)
-
-The first script processes a large `.zip` file (e.g., `pubchem_10m.txt.zip`) to:
-
-1. Filter molecules by Molecular Weight (100–700 Da).
-2. Deconstruct molecules into Morgan fragments.
-3. Calculate a **Fragment Penalty** based on the log-frequency of occurrence.
-4. Export the reference data to `freq_data.csv`.
-
-### 2. SA Score Calculation (`Main Pipeline`)
-
-The second script loads the `freq_data.csv` and calculates scores for a target dataset:
-
-* **`compute_sa_score(smiles)`**: The core function that aggregates fragment penalties and complexity penalties.
-* **`is_bridged(smiles)`**: A deep-dive topological function to identify complex ring systems.
-* **`process_molecules_in_parallel`**: Uses a pool of workers to maximize CPU utilization.
-
----
-
-## 📈 Methodology
-
-The SA Score is calculated as:
-
-SA\_Score = fragment\_penalty - complexity\_penalty
-
-| Component | Description |
-| --- | --- |
-| **Fragment Score** | Based on the rarity of fragments in the PubChem/Reference set. Rare fragments increase the score. |
-| **Size Penalty** | $n^{1.005} - n$, where $n$ is the number of atoms. |
-| **Stereo Penalty** | $\log_{10}(\text{chiral centers} + 1)$. |
-| **Ring Penalty** | Specifically targets bridged, spiro, and macrocyclic systems. |
-
----
-
-To include a **"How to Use"** section in your README that explains the technical setup on a local computer, use the following format.
-
-This guide assumes the user has a Python environment ready.
-
----
-
-## 💻 Installation & Usage Guide
-
-Follow these steps to set up and run the Synthetic Accessibility (SA) Scorer on your local machine.
-
-### 1. Environment Setup
-
-First, ensure you have Python 3.8+ installed. It is recommended to use a virtual environment:
+### Installation
+Clone the repository and install the necessary requirements:
 
 ```bash
-# Create and activate a virtual environment
-python -m venv sa_env
-source sa_env/bin/activate  # On Windows: sa_env\Scripts\activate
-
-# Install required dependencies
-pip install rdkit pandas numpy tqdm
+git clone https://github.com/harutyunyansevada31/SA_score.git
+cd SA_score
+pip install -r requirements.txt
 ```
 
-### 2. Prepare the Reference Data (First Run Only)
+## 💻 Usage
 
-The scorer requires a fragment frequency library to determine what "rare" chemistry looks like.
+`SA_score` is designed to be flexible. You can either use the pre-calculated fragment scores (derived from a dataset of 1 million molecules) or generate your own scores based on a custom library.
 
-1. Download a large SMILES dataset (e.g., PubChem) and name it `pubchem_10m.txt.zip`.
-2. Run the **Fragment Counting** portion of the script.
-3. This will generate a file named `freq_data.csv`. **Do not delete this file**, as the scorer needs it for every calculation.
+### 1. Standard Usage (Pre-calculated Data)
+If you want to use the default fragment penalties and structural complexity logic, you can start scoring molecules immediately.
 
-### 3. Running the Scorer
-
-To score your own molecules, follow these steps:
-
-1. **Prepare your input:** Create a CSV file (e.g., `molecules_to_score.csv`) with a column named `smiles`.
-2. **Update Paths:** Open the script and update the file paths in the `main()` function:
 ```python
-# Update these paths to match your computer's folders
-freq_data_path = 'C:/Users/Name/Downloads/freq_data.csv' or '/home/Name/Downloads/freq_data.csv'
-input_smiles_path = 'C:/Users/Name/Downloads/target_data.csv' or '/home/Name/Downloads/target_data.csv'
+from my_library.SaScore import MoleculeProcessor
+from rdkit import Chem
+
+# Initialize the scorer with default weights
+scorer = MoleculeProcessor()
+
+# Load your molecule
+smiles = "CC(=O)NC1=CC=C(C=C1)O" 
+# Calculate SA Score
+
+score = scorer.SaScorer(smiles)
+print(f"SA Score: {score:.3f}")
 ```
 
+### 2. Advanced Usage (Custom Dataset)
+If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of 1 million+ molecules:
 
-3. **Execute:**
-```bash
-python sa_scorer.py
+1.  **Prepare your dataset:** Ensure your molecules are in a format readable by RDKit (e.g., a `.smi` or `.csv` file).
+2.  **Run the Penalty Calculator:** Use the training module to generate a new fragment weight library.
+
+```python
+from my_library.FragmentPenaltyFileGeneration import FragmentPenalty
+
+# Initialize the calculator with your custom dataset
+calculator = FragmentPenalty(zip_path="your_custom_molecules.smi")
+
+# Generate new fragment penalties
+calculator.save_results(filename="your_filename")
+
+# Main usage
+from my_library.SaScore import MoleculeProcessor
+custom_scorer = MoleculeProcessor(filepath="your_filepath")
 ```
-
-
-
-### 4. How it Works (System Architecture)
-
-The script uses a multi-stage pipeline to ensure efficiency on your local hardware:
-
-1. **Data Loading:** Loads the `freq_data.csv` into memory as a lookup dictionary.
-2. **Parallelization:** The script detects your CPU core count (e.g., 8 or 16 cores) and splits your SMILES list into "chunks."
-3. **Processing:** Each core independently calculates the fragment and complexity penalties.
-4. **Aggregation:** Results are collected and displayed as an average score and total processing time.
 
 ---
 
-### 📂 File Requirements
+### Key Improvements Made:
+* **Hierarchical Structure:** Used clear subheadings to separate the "plug-and-play" user from the "power user."
+* **Object-Oriented Logic:** I framed the code as if you have `SAScorer` and `PenaltyCalculator` classes, which is standard for Python packages. If your class names are different, simply swap them out.
+* **The "Why":** I added a brief explanation of *why* someone would choose Path 2 (specialized chemical spaces), which adds professional context to your repository.
 
-* **`pubchem_10m.txt.zip`**: Dataset for creating freq_data.csv, Just in case, [Here is the dataset I used](https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/pubchem_10m.txt.zip) 
-* **`freq_data.csv`**: The "knowledge base" created from the reference set.
-* **`target_data.csv`**: Your molecules. Must contain a `smiles` column.
+**Would you like me to help you write a "Technical Details" section that explains the math behind the fragment penalties or how the complexity score is weighted?**
 
----
+### Interpretation
+* **1.0:** Very easy to synthesize (simple, common fragments).
+* **10.0:** Extremely difficult to synthesize (complex, rare fragments, high chirality).
 
-### ⚖️ License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/harutyunyansevada31/SA_score/blob/main/LICENSE) file for details.
+
+## 📚 References
+This implementation is based on the methodology described by **Ertl and Schuffenhauer**:
+> Ertl, P., Schuffenhauer, A. "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions." *Journal of Cheminformatics* 1, 8 (2009). [DOI: 10.1186/1758-2946-1-8](https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-1-8)
+
+## 🤝 Contributing
+Contributions are welcome! If you find a bug or have a feature request (e.g., support for additional fingerprints like MACCS), please open an issue or submit a pull request.
+
+## 📜 License
+This project is licensed under the MIT License - see the `LICENSE` file for details.
