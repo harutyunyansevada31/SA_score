@@ -31,7 +31,7 @@ pip install -r requirements.txt
 `SA_score` is designed to be flexible. You can either use the pre-calculated fragment scores (derived from a dataset of 1 million molecules) or generate your own scores based on a custom library.
 
 ### 1. Standard Usage (Pre-calculated Data)
-If you want to use the default fragment penalties and structural complexity logic, ensure you have downloaded the freq_data file. This file contains the pre-calculated fragment penalties derived from our baseline dataset.
+If you want to use the default fragment penalties and structural complexity logic, ensure you have downloaded the `freq_data` file. This file contains the pre-calculated fragment penalties derived from our baseline dataset.
 
 ```python
 from my_library.SaScore import MoleculeProcessor
