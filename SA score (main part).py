@@ -12,7 +12,6 @@ from rdkit import RDLogger
 warnings.filterwarnings('ignore')
 RDLogger.DisableLog('rdApp.*')
 
-
 def load_fragment_data(filepath: str) -> tuple:
     """Load fragment frequency and penalty data from CSV file."""
     freq_df = pd.read_csv(filepath)
@@ -51,7 +50,6 @@ def fragment_info_for_molecule(smiles: str, radius: int = 2) -> pd.DataFrame:
         'count': counts,
         'fragment_penalty': penalties
     })
-
 
 def is_bridged(smiles: str) -> tuple:
     """Calculate number of bridgehead and spiro atoms in a molecule."""
