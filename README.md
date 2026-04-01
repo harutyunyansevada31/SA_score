@@ -71,13 +71,6 @@ custom_scorer = MoleculeProcessor(filepath="your_filepath")
 
 ---
 
-### Key Improvements Made:
-* **Hierarchical Structure:** Used clear subheadings to separate the "plug-and-play" user from the "power user."
-* **Object-Oriented Logic:** I framed the code as if you have `SAScorer` and `PenaltyCalculator` classes, which is standard for Python packages. If your class names are different, simply swap them out.
-* **The "Why":** I added a brief explanation of *why* someone would choose Path 2 (specialized chemical spaces), which adds professional context to your repository.
-
-**Would you like me to help you write a "Technical Details" section that explains the math behind the fragment penalties or how the complexity score is weighted?**
-
 ### Interpretation
 * **1.0:** Very easy to synthesize (simple, common fragments).
 * **10.0:** Extremely difficult to synthesize (complex, rare fragments, high chirality).
