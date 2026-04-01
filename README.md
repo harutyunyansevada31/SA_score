@@ -38,7 +38,8 @@ from my_library.SaScore import MoleculeProcessor
 from rdkit import Chem
 
 # Initialize the scorer with default weights
-scorer = MoleculeProcessor()
+filepath = 'Your_path_to_freq_data.csv'
+scorer = MoleculeProcessor(filepath)
 
 # Load your molecule
 smiles = "CC(=O)NC1=CC=C(C=C1)O" 
