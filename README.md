@@ -37,14 +37,13 @@ If you want to use the default fragment penalties and structural complexity logi
 from my_library.SaScore import MoleculeProcessor
 from rdkit import Chem
 
-# Initialize the scorer with default weights
-filepath = 'Your_path_to_freq_data.csv'
-scorer = MoleculeProcessor(filepath)
+# Initialize the scorer with default penalties
+scorer = MoleculeProcessor(filepath='Your_path_to_freq_data.csv')
 
 # Load your molecule
 smiles = "CC(=O)NC1=CC=C(C=C1)O" 
-# Calculate SA Score
 
+# Calculate SA Score
 score = scorer.SaScorer(smiles)
 print(f"SA Score: {score:.3f}")
 ```
@@ -52,14 +51,14 @@ print(f"SA Score: {score:.3f}")
 ### 2. Advanced Usage (Custom Dataset)
 If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of 1 million+ molecules:
 
-1.  **Prepare your dataset:** Ensure your molecules are in a format readable by RDKit (e.g., a `.smi` or `.csv` file).
-2.  **Run the Penalty Calculator:** Use the training module to generate a new fragment penalty dataset (this will take ~ 5 minutes).
+1.  **Prepare your dataset:** Ensure your molecules are in `.zip` or `.gz` format, or in an uncompressed file.
+2.  **Run the Penalty Calculator:** Generate a new fragment penalty dataset (this will take ~ 5 minutes).
 
 ```python
 from my_library.FragmentPenaltyFileGenerator import FragmentPenalty
 
 # Initialize the calculator with your custom dataset
-calculator = FragmentPenalty(path="your_custom_molecules.smi")
+calculator = FragmentPenalty(path="your_custom_molecules")
 
 # Generate new fragment penalties
 calculator.save_results(filename="your_filename")
@@ -67,6 +66,13 @@ calculator.save_results(filename="your_filename")
 # Main usage
 from my_library.SaScore import MoleculeProcessor
 custom_scorer = MoleculeProcessor(filepath="your_filepath")
+
+# Load your molecule
+smiles = "CC(=O)NC1=CC=C(C=C1)O" 
+
+# Calculate SA Score
+score = custom_scorer.SaScorer(smiles)
+print(f"SA Score: {score:.3f}")
 ```
 
 ---
