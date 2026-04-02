@@ -53,7 +53,7 @@ print(f"SA Score: {score:.3f}")
 If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of 1 million+ molecules:
 
 1.  **Prepare your dataset:** Ensure your molecules are in a format readable by RDKit (e.g., a `.smi` or `.csv` file).
-2.  **Run the Penalty Calculator:** Use the training module to generate a new fragment weight library.
+2.  **Run the Penalty Calculator:** Use the training module to generate a new fragment penalty dataset (this will take ~ 5 minutes).
 
 ```python
 from my_library.FragmentPenaltyFileGeneration import FragmentPenalty
