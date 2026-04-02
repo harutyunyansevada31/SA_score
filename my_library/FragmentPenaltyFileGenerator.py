@@ -11,8 +11,8 @@ import io
 RDLogger.DisableLog('rdApp.*')
 
 class FragmentPenalty:
-    def __init__(self, zip_path, limit=1000000):
-        self.zip_path = zip_path
+    def __init__(self, path, limit=1000000):
+        self.path = path
         self.limit = limit
         self.freq_df = None
 
@@ -22,7 +22,7 @@ class FragmentPenalty:
         processed_count = 0
         passed_filter_count = 0
 
-        path = self.zip_path
+        path = self.path
 
         try:
             if path.endswith('.zip'):

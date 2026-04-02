@@ -56,10 +56,10 @@ If your research involves a specific chemical space (e.g., natural products or s
 2.  **Run the Penalty Calculator:** Use the training module to generate a new fragment penalty dataset (this will take ~ 5 minutes).
 
 ```python
-from my_library.FragmentPenaltyFileGeneration import FragmentPenalty
+from my_library.FragmentPenaltyFileGenerator import FragmentPenalty
 
 # Initialize the calculator with your custom dataset
-calculator = FragmentPenalty(zip_path="your_custom_molecules.smi")
+calculator = FragmentPenalty(path="your_custom_molecules.smi")
 
 # Generate new fragment penalties
 calculator.save_results(filename="your_filename")
