@@ -11,7 +11,7 @@ RDLogger.DisableLog('rdApp.*')
 class MoleculeProcessor:
     def __init__(self, filepath=None):
         if filepath is None:
-            base_dir = os.path.dirname(__file__)
+            base_dir = os.path.dirname(os.path.abspath(__file__))
             self.filepath = os.path.join(base_dir, 'freq_data.csv')
         else:
             self.filepath = filepath
