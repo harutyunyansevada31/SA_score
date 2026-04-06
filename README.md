@@ -33,14 +33,13 @@ pip install -r requirements.txt
 If you want to use the default fragment penalties and structural complexity logic, ensure you have downloaded the `freq_data` file. This file contains the pre-calculated fragment penalties derived from our baseline dataset.
 
 ```python
-from my_library.SaScore import MoleculeProcessor
-from rdkit import Chem
+from SA_score.SaScore import MoleculeProcessor
 
 # Initialize the scorer with default penalties
 scorer = MoleculeProcessor(filepath='Your_path_to_freq_data.csv')
 
 # Load your molecule
-smiles = "CC(=O)NC1=CC=C(C=C1)O" 
+smiles = "CC(=O)NC1=CC=C(C=C1)O"
 
 # Calculate SA Score
 score = scorer.SaScorer(smiles)
@@ -54,7 +53,7 @@ If your research involves a specific chemical space (e.g., natural products or s
 2.  **Run the Penalty Calculator:** Generate a new fragment penalty dataset (this will take ~ 5 minutes).
 
 ```python
-from my_library.FragmentPenaltyFileGenerator import FragmentPenalty
+from SA_score.FragmentPenaltyFileGenerator import FragmentPenalty
 
 # Initialize the calculator with your custom dataset
 calculator = FragmentPenalty(path="your_custom_molecules")
@@ -63,11 +62,12 @@ calculator = FragmentPenalty(path="your_custom_molecules")
 calculator.save_results(filename="your_filename")
 
 # Main usage
-from my_library.SaScore import MoleculeProcessor
+from SA_score.SaScore import MoleculeProcessor
+
 custom_scorer = MoleculeProcessor(filepath="your_filepath")
 
 # Load your molecule
-smiles = "CC(=O)NC1=CC=C(C=C1)O" 
+smiles = "CC(=O)NC1=CC=C(C=C1)O"
 
 # Calculate SA Score
 score = custom_scorer.SaScorer(smiles)
