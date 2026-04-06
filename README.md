@@ -9,7 +9,6 @@
     * Ring complexity (bridgeheads, spiro atoms, and macrocycles)
     * Molecular size and symmetry
 * **RDKit Integration:** Seamlessly processes SMILES strings and RDKit molecule objects.
-* **Batch Processing:** Support for scoring large libraries of molecules efficiently.
 
 ## 🚀 Getting Started
 
@@ -49,7 +48,7 @@ print(f"SA Score: {score:.3f}")
 ```
 
 ### 2. Advanced Usage (Custom Dataset)
-If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of 1 million+ molecules:
+If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of ~ 1 million molecules:
 
 1.  **Prepare your dataset:** Ensure your molecules are in `.zip` or `.gz` format, or in an uncompressed file.
 2.  **Run the Penalty Calculator:** Generate a new fragment penalty dataset (this will take ~ 5 minutes).
@@ -87,7 +86,7 @@ This implementation is based on the methodology described by **Ertl and Schuffen
 > Ertl, P., Schuffenhauer, A. "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions." *Journal of Cheminformatics* 1, 8 (2009). [DOI: 10.1186/1758-2946-1-8](https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-1-8)
 
 ## 🤝 Contributing
-Contributions are welcome! If you find a bug or have a feature request (e.g., support for additional fingerprints like MACCS), please open an issue or submit a pull request.
+Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request.
 
 ## 📜 License
 This project is licensed under the MIT License - see the `LICENSE` file for details.
