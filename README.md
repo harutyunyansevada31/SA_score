@@ -1,7 +1,8 @@
 # SA-Score: Synthetic Accessibility Scorer
 
-**SA-Score** is a Python-based tool designed to estimate the synthetic accessibility of drug-like molecules. By combining fragment-based analysis with structural complexity penalties, it provides a heuristic score (typically between 1 and 10) to help prioritize molecules in virtual screening and generative design.
+**SA-Score** is a Python tool for estimating the synthetic accessibility of drug-like molecules. By combining fragment-based statistics with structural complexity penalties, it produces a heuristic score (1–10) that helps prioritize compounds in virtual screening and generative design workflows.
 
+Unlike standard implementations, this package allows custom recalibration of fragment penalties on user-defined datasets, making it adaptable to specialized chemical spaces.
 ## 🧪 Features
 * **Fragment-Based Scoring:** Analyzes the frequency of molecular fragments (based on Morgan fingerprints) to identify common vs. "rare" substructures.
 * **Complexity Penalties:** Accounts for structural features that complicate synthesis, including:
@@ -30,13 +31,13 @@ pip install -r requirements.txt
 `SA_score` is designed to be flexible. You can either use the pre-calculated fragment scores (derived from a dataset of 1 million molecules) or generate your own scores based on a custom library.
 
 ### 1. Standard Usage (Pre-calculated Data)
-If you want to use the default fragment penalties and structural complexity logic, ensure you have downloaded the `freq_data` file. This file contains the pre-calculated fragment penalties derived from our baseline dataset.
+If you want to use the default fragment penalties and structural complexity logic:
 
 ```python
 from SA_score.SaScore import MoleculeProcessor
 
 # Initialize the scorer with default penalties
-scorer = MoleculeProcessor(filepath='Your_path_to_freq_data.csv')
+scorer = MoleculeProcessor()
 
 # Load your molecule
 smiles = "CC(=O)NC1=CC=C(C=C1)O"

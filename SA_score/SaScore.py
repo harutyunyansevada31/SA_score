@@ -4,12 +4,18 @@ import pandas as pd
 import numpy as np
 import warnings
 from rdkit import RDLogger
+import os
 warnings.filterwarnings('ignore')
 RDLogger.DisableLog('rdApp.*')
 
 class MoleculeProcessor:
-    def __init__(self, filepath):
-        freq_df = pd.read_csv(filepath)
+    def __init__(self, filepath=None):
+        if filepath is None:
+            base_dir = os.path.dirname(__file__)
+            self.filepath = os.path.join(base_dir, 'freq_data.csv')
+        else:
+            self.filepath = filepath
+        freq_df = pd.read_csv(self.filepath)
         self.freq_dict = dict(zip(freq_df['fragment'], freq_df['count']))
         self.penalty_dict = dict(zip(freq_df['fragment'], freq_df['fragment_penalty']))
         self.default_penalty = freq_df.iloc[-1, 2]
