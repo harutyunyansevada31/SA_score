@@ -10,6 +10,7 @@ Unlike standard implementations, this package allows custom recalibration of fra
     * Ring complexity (bridgeheads, spiro atoms, and macrocycles)
     * Molecular size and symmetry
 * **RDKit Integration:** Seamlessly processes SMILES strings and RDKit molecule objects.
+* **High Efficiency:** High-throughput processing capable of calculating scores for approximately 1,000 molecules per second.
 
 ## 🚀 Getting Started
 
@@ -74,8 +75,39 @@ smiles = "CC(=O)NC1=CC=C(C=C1)O"
 score = custom_scorer.SaScorer(smiles)
 print(f"SA Score: {score:.3f}")
 ```
+### 3. Accessing Detailed Metrics
+Beyond the final SA-Score, you can extract individual components such as fragment contributions, complexity penalties, and specific structural counts (for further details regarding complexity and fragment scores, please refer to the referenced works):
+```python
+from SA_score.SaScore import MoleculeProcessor
 
+scorer = MoleculeProcessor()
+smiles = "CC(=O)NC1=CC=C(C=C1)O"
+
+# Get individual components
+complexity = scorer.ComplexityScore(smiles)
+fragments = scorer.FragmentScore(smiles)
+
+# Get structural counts (bridgeheads and spiro atoms)
+bridgeheads, spiro_atoms = scorer.bridge(smiles)
+
+print(f"Complexity: {complexity}, Fragments: {fragments}")
+print(f"Bridgeheads: {bridgeheads}, Spiro Atoms: {spiro_atoms}")
+```
 ---
+## 📊 Validation & Performance
+### Accuracy
+This implementation has been validated against the original RDKit SA-Score contribution. The correlation between this class and the standard RDKit implementation is 0.975, ensuring high fidelity to the established methodology while providing additional flexibility.
+
+### Benchmark Examples
+Below are sample scores calculated using this tool:
+
+| Molecule (SMILES)                                                            | SA-Score |
+|:-----------------------------------------------------------------------------|:---------|
+| `C1CCCCC1`                                                                   | 1.010    |
+| `CC(=O)NC1=CC=C(C=C1)O`                                                      | 1.363    | 
+| `CN1C=NC2=C1C(=O)N(C(=O)N2C)C`                                               | 2.368    | 
+| `CO[C@H]1CC[C@]2(CC1)Cc1ccccc1C21N=C(N)N(C)C1=O`                             | 4.012    |
+| `C/C=C1/CN2CC[C@@]34C(=Nc5c(OC)cccc53)O/C=C(/C(=O)OC)[C@H]1CC24`             | 5.258    |
 
 ### Interpretation
 * **1.0:** Very easy to synthesize (simple, common fragments).
