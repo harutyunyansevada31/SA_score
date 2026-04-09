@@ -34,7 +34,7 @@ class MoleculeProcessor:
             self.bridge()
         return self.mol
 
-    def bridge(self):
+    def bridge(self, smiles):
         ring_info = self.mol.GetRingInfo()
         rings = list(ring_info.AtomRings())
 
