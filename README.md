@@ -76,7 +76,7 @@ score = custom_scorer.SaScorer(smiles)
 print(f"SA Score: {score:.3f}")
 ```
 ### 3. Accessing Detailed Metrics
-Beyond the final SA-Score, you can extract individual components such as fragment contributions, complexity penalties, and specific structural counts (for further details regarding complexity and fragment scores, please refer to the referenced works):
+Beyond the final SA-Score, you can extract individual components such as fragment contributions, complexity penalties, and specific structural counts (for further details regarding complexity and fragment scores, please refer to the [referenced work](#-references)):
 ```python
 from SA_score.SaScore import MoleculeProcessor
 
