@@ -37,9 +37,7 @@ class MoleculeProcessor:
     def bridge(self, smiles):
         ring_info = self.mol.GetRingInfo()
         rings = list(ring_info.AtomRings())
-
         output = []
-
         # Analyze ring pairs
         for i in range(len(rings)):
             for j in range(i + 1, len(rings)):
