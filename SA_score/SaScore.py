@@ -139,6 +139,8 @@ class MoleculeProcessor:
         return bridgehead_count, spiro_count
 
     def ComplexityScore(self, smiles):
+        if not self._prepare_mol(smiles):
+            return 0.0
         # Stereocenter complexity
         stereo_centers = rdMolDescriptors.CalcNumAtomStereoCenters(self.mol)
         stereo_complexity = np.log10(stereo_centers + 1)
