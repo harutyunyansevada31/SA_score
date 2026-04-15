@@ -49,10 +49,10 @@ print(f"SA Score: {score:.3f}")
 ```
 
 ### 2. Advanced Usage (Custom Dataset)
-If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset of ~ 1 million molecules:
+If your research involves a specific chemical space (e.g., natural products or specific macrocycles) and you wish to recalibrate the fragment penalties using your own dataset:
 
-1.  **Prepare your dataset:** Ensure your molecules are in `.zip` or `.gz` format, or in an uncompressed file.
-2.  **Run the Penalty Calculator:** Generate a new fragment penalty dataset (this will take ~ 5 minutes).
+1.  **Prepare your dataset:** Ensure your molecules are in `.zip` or `.gz` format, or in an uncompressed file. The input file should consist of valid SMILES strings, with an optimal dataset size of one million molecules.
+2.  **Run the Penalty Calculator:** Generate a new fragment penalty dataset, which will be exported as a CSV file. (this will take ~ 5 minutes) 
 
 ```python
 from SA_score.FragmentPenaltyFileGenerator import FragmentPenalty
