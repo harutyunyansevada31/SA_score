@@ -31,7 +31,7 @@ class MoleculeProcessor:
         self.mol = Chem.MolFromSmiles(smiles)
         if self.mol:
             # We call bridge automatically so the counts are ready for ComplexityScore
-            self.bridge()
+            self.bridge(smiles)
         return self.mol
 
     def bridge(self, smiles):
